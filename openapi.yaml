@@ -1,0 +1,50 @@
+openapi: "3.0.0"
+info:
+  title: Dictionary
+  version: "0.1"
+paths:
+  /nouns:
+    get:
+      tags:
+        - Főnevek dolgai
+      description: Visszaadja a főnevek listáját
+      operationId: api.get_nouns
+      responses:
+        '200':
+          description: "Sikeres listázás"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Noun'
+    post:
+      tags:
+        - Főnevek dolgai
+      description: Létrehoz egy főnevet
+      operationId: api.create_noun
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Noun'
+      responses:
+        '201':
+          description: Sikeres létrehozás
+
+components:
+  schemas:
+    Noun:
+      type: object
+      properties:
+        id: 
+          type: integer
+          readOnly: true
+        article:
+          type: string
+        word:
+          type: string
+        plural:
+          type: string
+      required:
+        - article
+        - word
+        - plural
