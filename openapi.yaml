@@ -29,13 +29,53 @@ paths:
       responses:
         '201':
           description: Sikeres létrehozás
+  /verb:
+    get:
+      tags:
+        - Igék dolgai
+      description: Visszaadja a főnevek listáját
+      operationId: api.get_verbs
+      responses:
+        '200':
+          description: "Sikeres listázás"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Verb'
+    post:
+      tags:
+        - Igék dolgai
+      description: Létrehoz egy főnevet
+      operationId: api.create_verb
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Verb'
+      responses:
+        '201':
+          description: Sikeres létrehozás
 
 components:
   schemas:
+    Dictionary:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nouns:
+          $ref: '#/components/schemas/Noun'
+        verbs:
+          $ref: '#/components/schemas/Verb'
+        Adjective:
+          $ref: '#/components/schemas/Adjective'
+        Others:
+          $ref: '#/components/schemas/Other'
     Noun:
       type: object
       properties:
-        id: 
+        id:
           type: integer
           readOnly: true
         article:
@@ -48,3 +88,33 @@ components:
         - article
         - word
         - plural
+    Verb:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        praesent:
+          type: string
+        E3:
+          type: string
+        praeteritum:
+          type: string
+        perfekt:
+          type: string
+    Adjective:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        word:
+          type: string
+    Other:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        word:
+          type: string
