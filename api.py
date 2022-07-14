@@ -1,7 +1,17 @@
 from orm import Noun
 from orm import Verb
 from orm import Adjective
+from orm import Dictionary
 from main import db
+
+
+def create_dictionary():
+    pass
+
+
+def get_dictionary():
+    dictionary = db.session.query(Dictionary).all()
+    return dictionary.dump(), 200
 
 
 def get_nouns():

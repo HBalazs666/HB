@@ -3,6 +3,32 @@ info:
   title: Dictionary
   version: "0.1"
 paths:
+  /dictionary:
+    get:
+      tags:
+        - Dictionary dolgai
+      description: Visszaadja a főnevek listáját
+      operationId: api.get_dictionary
+      responses:
+        '200':
+          description: "Sikeres listázás"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dictionary'
+    post:
+      tags:
+        - Dictionary dolgai
+      description: Létrehoz egy főnevet
+      operationId: api.create_dictionary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dictionary'
+      responses:
+        '201':
+          description: Sikeres létrehozás
   /nouns:
     get:
       tags:
@@ -15,7 +41,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Noun'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Noun'
     post:
       tags:
         - Főnevek dolgai
@@ -33,7 +61,7 @@ paths:
     get:
       tags:
         - Igék dolgai
-      description: Visszaadja a főnevek listáját
+      description: Visszaadja az igek listáját
       operationId: api.get_verbs
       responses:
         '200':
@@ -41,6 +69,8 @@ paths:
           content:
             application/json:
               schema:
+                type: array
+                items:
                 $ref: '#/components/schemas/Verb'
     post:
       tags:

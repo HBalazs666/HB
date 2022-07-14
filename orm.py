@@ -13,6 +13,19 @@ class Dictionary(db.Model):
     adjectives = db.relationship('Adjective', back_populates='dictionary')
     others = db.relationship('Other', back_populates='dictionary')
 
+    def dump(self):
+        verbs = [v.dump() for v in self.verbs]
+        nouns = [n.dump() for n in self.nouns]
+        adjectives = [a.dump() for a in self.adjectives]
+        others = [o.dump() for o in self.others]
+        ret = {
+            'id': self.id,
+            'nouns': nouns,
+            'verbs': verbs,
+            'adjectives': adjectives,
+            'others': others
+        }
+        return ret
 
 
 class Noun(db.Model):
