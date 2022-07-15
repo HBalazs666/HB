@@ -1,18 +1,53 @@
-from orm import Noun
+from connexion.problem import problem
+from orm import Noun, Other
 from orm import Verb
 from orm import Adjective
 from orm import Dictionary
 from main import db
 
 
-def create_dictionary():
-    pass
+def create_dictionary(body):
+    dictionary = Dictionary()
+    db.session.add(dictionary)
+    db.session.commit()
+
+
+def get_dict_nouns():
+    dictionaries = db.session.query(Dictionary).all()
+
+    verbs = dictionaries[0].verbs
+    lst = [v.dump() for v in verbs]
+
+    return lst, 200
 
 
 def get_dictionary():
-    dictionary = db.session.query(Dictionary).all()
-    return dictionary.dump(), 200
+    dictionaries = db.session.query(Dictionary).all()
+    lst = [dictionary.dump() for dictionary in dictionaries]
+    return lst, 200
 
+
+def add_word(_type, germanWord):
+    dictionary = db.session.query(Dictionary).filter_by(id=1).one_or_none()
+    
+    if _type == 'noun':
+        word = db.session.query(Noun).filter_by(id=germanWord).one_or_none()
+        dictionary.nouns.append(word)
+    elif _type == 'verb':
+        word = db.session.query(Verb).filter_by(
+                                        praesent=germanWord).one_or_none()
+        dictionary.verbs.append(word)
+    elif _type == 'adjective':
+        word = db.session.query(Adjective).filter_by(id=germanWord).one_or_none()
+        dictionary.adjectives.append(word)
+    elif _type == 'other':
+        word = db.session.query(Other).filter_by(id=germanWord).one_or_none()
+        dictionary.others.append(word)
+    else:
+        return problem(404, 'Not found',
+                       'Word Type does not exist.')
+
+    return dictionary
 
 def get_nouns():
     nouns = db.session.query(Noun).all()
@@ -31,6 +66,9 @@ def create_noun(body):
     noun = Noun(article=article, word=word, plural=plural)
     db.session.add(noun)
     db.session.commit()
+
+    add_word('noun', noun.id)
+
     return noun.dump(), 201
 
 
@@ -43,6 +81,10 @@ def create_verb(body):
                 perfekt=perfekt)
     db.session.add(verb)
     db.session.commit()
+
+
+    add_word('verb', praesent)
+
     return verb.dump(), 201
 
 

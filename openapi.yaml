@@ -15,20 +15,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Dictionary'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dictionary'
     post:
       tags:
         - Dictionary dolgai
       description: Létrehoz egy főnevet
       operationId: api.create_dictionary
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Dictionary'
+      # requestBody:
+      #   content:
+      #     application/json:
+      #       schema:
+      #         $ref: '#/components/schemas/Dictionary'
       responses:
         '201':
           description: Sikeres létrehozás
+  /dictionary/verbs:
+    get:
+      tags:
+        - Dictionary dolgai
+      description: Visszaadja a dictionary-k igéinek listáját
+      operationId: api.get_dict_nouns
+      responses:
+        '200':
+            description: "Sikeres listázás"
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Verb'
   /nouns:
     get:
       tags:
@@ -95,13 +112,21 @@ components:
           type: integer
           readOnly: true
         nouns:
-          $ref: '#/components/schemas/Noun'
+          type: array
+          items:
+            $ref: '#/components/schemas/Noun'
         verbs:
-          $ref: '#/components/schemas/Verb'
+          type: array
+          items:
+            $ref: '#/components/schemas/Verb'
         Adjective:
-          $ref: '#/components/schemas/Adjective'
+          type: array
+          items:
+            $ref: '#/components/schemas/Adjective'
         Others:
-          $ref: '#/components/schemas/Other'
+          type: array
+          items:
+            $ref: '#/components/schemas/Other'
     Noun:
       type: object
       properties:

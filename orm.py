@@ -1,5 +1,6 @@
 from main import db
 from sqlalchemy import Column, Integer, String, ForeignKey
+import json
 
 
 
@@ -25,6 +26,7 @@ class Dictionary(db.Model):
             'adjectives': adjectives,
             'others': others
         }
+
         return ret
 
 
