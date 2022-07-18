@@ -1,10 +1,15 @@
 from main import db
 from sqlalchemy import Column, Integer, String, ForeignKey
 import json
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
 
 
+# class Base(db.Model):
+#     __abstract__ = True
 
-class Dictionary(db.Model):
+class Dictionary(Base):
     __tablename__ = 'dictionary'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -30,7 +35,7 @@ class Dictionary(db.Model):
         return ret
 
 
-class Noun(db.Model):
+class Noun(Base):
     __tablename__ = 'nouns'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -54,7 +59,7 @@ class Noun(db.Model):
         return self.word
 
 
-class Verb(db.Model):
+class Verb(Base):
     __tablename__ = 'verbs'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -80,7 +85,7 @@ class Verb(db.Model):
         return self.praesent
 
 
-class Adjective(db.Model):
+class Adjective(Base):
     __tablename__ = 'adjectives'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -100,7 +105,7 @@ class Adjective(db.Model):
         return self.word
 
 
-class Other(db.Model):
+class Other(Base):
     __tablename__ = 'others'
 
     id = db.Column(db.Integer, primary_key=True)

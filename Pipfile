@@ -9,6 +9,7 @@ connexion = {extras = ["swagger-ui"], version = "*"}
 sqlalchemy = "*"
 flask-sqlalchemy = "*"
 swagger-ui = "*"
+alembic = "*"
 
 [dev-packages]
 
